@@ -74,13 +74,23 @@ namespace DBEditer2
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            //tableLayoutPanel1
+        {   
+            /*
             TabControl tabC = new TabControl();
             tabC = this.tabControl1;            
             tabC.TabPages.Add("SQL" +  tabC.TabPages.Count + 1);
-            TableLayoutPanel tblLtPl = new TableLayoutPanel();
-            tblLtPl = this.tableLayoutPanel1;
+            ucGrid ucGridNew = new ucGrid();
+             */
+            CreateTabPage();
+        }
+
+        private void CreateTabPage()
+        {
+            TabPage tp = new TabPage((tabControl1.TabPages.Count + 1).ToString());
+            //Form1 frm1 = new Form1();
+            ucGrid ucGridNew = new ucGrid();          
+            tp.Controls.Add(ucGridNew);
+            tabControl1.TabPages.Add(tp);
         }
     }
 }
