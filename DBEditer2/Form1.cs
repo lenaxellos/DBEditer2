@@ -86,11 +86,13 @@ namespace DBEditer2
 
         private void CreateTabPage()
         {
-            TabPage tp = new TabPage((tabControl1.TabPages.Count + 1).ToString());
+            TabPage tp = new TabPage("SQL"+(tabControl1.TabPages.Count + 1).ToString());
             //Form1 frm1 = new Form1();
             ucGrid ucGridNew = new ucGrid();          
             tp.Controls.Add(ucGridNew);
             tabControl1.TabPages.Add(tp);
+            ucGridNew.Dock = DockStyle.Fill;
+            tabControl1.TabPages[0].Select();
         }
     }
 }

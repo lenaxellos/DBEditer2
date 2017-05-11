@@ -43,7 +43,14 @@ namespace DBEditer2
 
         public void DBFillData(System.Windows.Forms.DataGridView dgv)
         {
-            adapter.Fill(dataTable);            
+            try
+            {
+                adapter.Fill(dataTable);
+            }
+            catch(System.Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show(e.Message);                
+            }
             //DBSetColumnKey();
             dgv.DataSource = dataTable;
             conn.Close();
@@ -114,8 +121,11 @@ namespace DBEditer2
                 {
                     if (listResult[cnt] == "FROM")
                     {
-                        tableName = listResult[cnt + 1];
-                        return tableName;
+                        if (listResult.Count - 1 > cnt)
+                        {
+                            tableName = listResult[cnt + 1];
+                            return tableName;
+                        }
                     }
                 }
             }
