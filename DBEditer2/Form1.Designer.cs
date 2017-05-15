@@ -56,11 +56,11 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtFindTable = new System.Windows.Forms.TextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.lbTable = new System.Windows.Forms.ListBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.rdoView = new System.Windows.Forms.RadioButton();
             this.rdoTable = new System.Windows.Forms.RadioButton();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.splitContainer3.Panel1.SuspendLayout();
@@ -77,6 +77,8 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -324,47 +326,72 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.12748F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.87252F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.948102F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.0519F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(210, 692);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // txtFindTable
             // 
             this.txtFindTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtFindTable.Location = new System.Drawing.Point(3, 63);
+            this.txtFindTable.Location = new System.Drawing.Point(3, 56);
             this.txtFindTable.Name = "txtFindTable";
             this.txtFindTable.Size = new System.Drawing.Size(204, 21);
             this.txtFindTable.TabIndex = 9;
+            this.txtFindTable.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFindTable_KeyDown);
             // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 95);
+            this.splitContainer2.Location = new System.Drawing.Point(3, 94);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.lbTable);
+            this.splitContainer2.Panel1.Controls.Add(this.dataGridView2);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.listBox1);
-            this.splitContainer2.Size = new System.Drawing.Size(204, 594);
-            this.splitContainer2.SplitterDistance = 83;
+            this.splitContainer2.Panel2.Controls.Add(this.dataGridView3);
+            this.splitContainer2.Size = new System.Drawing.Size(204, 595);
+            this.splitContainer2.SplitterDistance = 307;
             this.splitContainer2.TabIndex = 10;
             // 
-            // lbTable
+            // dataGridView2
             // 
-            this.lbTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbTable.FormattingEnabled = true;
-            this.lbTable.ItemHeight = 12;
-            this.lbTable.Location = new System.Drawing.Point(0, 0);
-            this.lbTable.Name = "lbTable";
-            this.lbTable.Size = new System.Drawing.Size(204, 83);
-            this.lbTable.TabIndex = 0;
+            this.dataGridView2.AllowUserToAddRows = false;
+            this.dataGridView2.AllowUserToDeleteRows = false;
+            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView2.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.ColumnHeadersVisible = false;
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView2.GridColor = System.Drawing.Color.White;
+            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.ReadOnly = true;
+            this.dataGridView2.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridView2.RowHeadersVisible = false;
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(204, 307);
+            this.dataGridView2.TabIndex = 2;
+            // 
+            // dataGridView3
+            // 
+            this.dataGridView3.AllowUserToAddRows = false;
+            this.dataGridView3.AllowUserToDeleteRows = false;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView3.GridColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.dataGridView3.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.ReadOnly = true;
+            this.dataGridView3.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridView3.RowTemplate.Height = 23;
+            this.dataGridView3.Size = new System.Drawing.Size(204, 284);
+            this.dataGridView3.TabIndex = 2;
             // 
             // panel2
             // 
@@ -373,7 +400,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(204, 54);
+            this.panel2.Size = new System.Drawing.Size(204, 47);
             this.panel2.TabIndex = 11;
             // 
             // rdoView
@@ -386,6 +413,7 @@
             this.rdoView.TabIndex = 1;
             this.rdoView.Text = "View";
             this.rdoView.UseVisualStyleBackColor = true;
+            this.rdoView.Click += new System.EventHandler(this.rdoView_Click);
             // 
             // rdoTable
             // 
@@ -399,16 +427,7 @@
             this.rdoTable.TabStop = true;
             this.rdoTable.Text = "Table";
             this.rdoTable.UseVisualStyleBackColor = true;
-            // 
-            // listBox1
-            // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(204, 507);
-            this.listBox1.TabIndex = 1;
+            this.rdoTable.Click += new System.EventHandler(this.rdoTable_Click);
             // 
             // Form1
             // 
@@ -442,6 +461,8 @@
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -478,11 +499,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TextBox txtFindTable;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ListBox lbTable;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RadioButton rdoView;
         private System.Windows.Forms.RadioButton rdoTable;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dataGridView3;
 
     }
 }

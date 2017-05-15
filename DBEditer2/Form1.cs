@@ -94,5 +94,48 @@ namespace DBEditer2
             ucGridNew.Dock = DockStyle.Fill;
             tabControl1.TabPages[0].Select();
         }
+
+        private void rdoTable_Click(object sender, EventArgs e)
+        {
+            DbShowTable();
+        }
+
+        private void txtFindTable_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                DbShowTable();
+            }
+
+        }
+
+        private void DbShowTable()
+        {
+            string query = "SELECT TABLE_NAME FROM USER_TABLES WHERE UPPER(TABLE_NAME) LIKE UPPER('%@TABLENAME@%') ORDER BY TABLE_NAME";
+            query = query.Replace("@TABLENAME@", txtFindTable.Text.Trim());
+
+            con = new DBCon();
+            con.DBConnect();
+            con.DBDataSet(query);
+            con.DBFillData(dataGridView2);
+        }
+
+        private void DbShowColumn()
+        {
+            dataGridView3.Rows.Clear();     
+
+            string query = "SELECT COLUMN_NAME, DATA_TYPE, DATA_LENGTH, NULLABLE FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = '@TABLENASE@'";
+            query = query.Replace("@TABLENAME@", txtFindTable.Text.Trim());
+
+            con = new DBCon();
+            con.DBConnect();
+            con.DBDataSet(query);
+            con.DBFillData(dataGridView3);
+        }
+
+        private void rdoView_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

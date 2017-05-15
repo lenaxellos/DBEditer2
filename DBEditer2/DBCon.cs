@@ -26,6 +26,9 @@ namespace DBEditer2
                                     "AND TABLE_NAME = '@TABLENAME@') " +
                                     "ORDER BY COLUMN_POSITION";
 
+        public const string SQLALLTABLE = "SELECT TABLE_NAME FROM USER_TABLES ORDER BY TABLE_NAME";
+
+
         public void DBConnect()
         {
             conn = new OracleConnection(ConfigurationSettings.AppSettings["ConnectionString"]);
@@ -41,7 +44,7 @@ namespace DBEditer2
             builder = new OracleCommandBuilder(adapter);            
         }
 
-        public void DBFillData(System.Windows.Forms.DataGridView dgv)
+        public void DBFillData(System.Windows.Forms.DataGridView dgv)                
         {
             try
             {
@@ -51,7 +54,8 @@ namespace DBEditer2
             {
                 System.Windows.Forms.MessageBox.Show(e.Message);                
             }
-            //DBSetColumnKey();
+            //DBSetColumnKey();                        
+
             dgv.DataSource = dataTable;
             conn.Close();
         }
