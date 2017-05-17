@@ -79,6 +79,8 @@
             // 
             // menuStrip
             // 
+            this.menuStrip.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.menuStrip.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
             this.editMenu,
@@ -108,7 +110,8 @@
             this.printSetupToolStripMenuItem,
             this.toolStripSeparator5,
             this.exitToolStripMenuItem});
-            this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
+            this.fileMenu.ForeColor = System.Drawing.Color.White;
+            this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ControlDarkDark;
             this.fileMenu.Name = "fileMenu";
             this.fileMenu.Size = new System.Drawing.Size(57, 20);
             this.fileMenu.Text = "파일(&F)";
@@ -119,7 +122,7 @@
             this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.newToolStripMenuItem.Text = "새로 만들기(&N)";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
             // 
@@ -205,6 +208,7 @@
             this.pasteToolStripMenuItem,
             this.toolStripSeparator7,
             this.selectAllToolStripMenuItem});
+            this.editMenu.ForeColor = System.Drawing.Color.White;
             this.editMenu.Name = "editMenu";
             this.editMenu.Size = new System.Drawing.Size(57, 20);
             this.editMenu.Text = "편집(&E)";
@@ -279,6 +283,7 @@
             this.viewMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolBarToolStripMenuItem,
             this.statusBarToolStripMenuItem});
+            this.viewMenu.ForeColor = System.Drawing.Color.White;
             this.viewMenu.Name = "viewMenu";
             this.viewMenu.Size = new System.Drawing.Size(59, 20);
             this.viewMenu.Text = "보기(&V)";
@@ -306,6 +311,7 @@
             // 
             this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
+            this.toolsMenu.ForeColor = System.Drawing.Color.White;
             this.toolsMenu.Name = "toolsMenu";
             this.toolsMenu.Size = new System.Drawing.Size(57, 20);
             this.toolsMenu.Text = "도구(&T)";
@@ -313,7 +319,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "옵션(&O)";
             // 
             // windowsMenu
@@ -325,6 +331,7 @@
             this.tileHorizontalToolStripMenuItem,
             this.closeAllToolStripMenuItem,
             this.arrangeIconsToolStripMenuItem});
+            this.windowsMenu.ForeColor = System.Drawing.Color.White;
             this.windowsMenu.Name = "windowsMenu";
             this.windowsMenu.Size = new System.Drawing.Size(50, 20);
             this.windowsMenu.Text = "창(&W)";
@@ -379,6 +386,7 @@
             this.searchToolStripMenuItem,
             this.toolStripSeparator8,
             this.aboutToolStripMenuItem});
+            this.helpMenu.ForeColor = System.Drawing.Color.White;
             this.helpMenu.Name = "helpMenu";
             this.helpMenu.Size = new System.Drawing.Size(72, 20);
             this.helpMenu.Text = "도움말(&H)";
@@ -419,6 +427,10 @@
             // 
             // statusStrip
             // 
+            this.statusStrip.AutoSize = false;
+            this.statusStrip.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.statusStrip.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.statusStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 527);
@@ -430,6 +442,7 @@
             // 
             // toolStripStatusLabel
             // 
+            this.toolStripStatusLabel.ForeColor = System.Drawing.Color.White;
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(31, 17);
             this.toolStripStatusLabel.Text = "상태";
@@ -438,6 +451,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(1031, 549);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
@@ -445,6 +459,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MDIParent1";
+            this.Opacity = 0.8D;
             this.Text = "MDIParent1";
             this.Load += new System.EventHandler(this.MDIParent1_Load);
             this.menuStrip.ResumeLayout(false);

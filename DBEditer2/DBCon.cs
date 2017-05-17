@@ -44,7 +44,7 @@ namespace DBEditer2
             builder = new OracleCommandBuilder(adapter);            
         }
 
-        public void DBFillData(System.Windows.Forms.DataGridView dgv)                
+        public void DBFillData(System.Windows.Forms.DataGridView dgv)
         {
             try
             {
@@ -82,23 +82,14 @@ namespace DBEditer2
                 // 레코드 계속 가져와서 루핑
                 while (reader.Read())
                 {
-                   
                     readString = reader[0] as string;
-                    keys[rowCnt] = dataTable.Columns[readString];
-                    //j++;
+                    keys[rowCnt] = dataTable.Columns[readString];                    
                     rowCnt++;
                 }
 
                 // 사용후 닫음
                 reader.Close();
-
-                //keys[0] = dataTable.Columns["ACCOUNTDATE"];
-                //keys[1] = dataTable.Columns["PTNO"];
-                //keys[2] = dataTable.Columns["DEPTCODE"];
-                //keys[3] = dataTable.Columns["JIBUFLAG"]; 
-                //dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["PTNO"] }; 
-                //dataTable.PrimaryKey = keys;
-            }            
+            }
         }
 
         public void DBUpdate()
