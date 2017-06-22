@@ -107,24 +107,15 @@ namespace DBEditer2
 
         private void ShowChildForm()
         {
-            foreach (var frm in this.MdiChildren)
-            {
-                if (frm.Name == "Form1")
-                {
-                    frm.BringToFront();
-                    frm.Focus();
-                    return;
-                }
-            }
 
             Form1 tFrm = new Form1()
             {
                 MaximizeBox = true,
                 MinimizeBox = true,
                 WindowState = FormWindowState.Maximized,
-                MdiParent = this
-            };
-            tFrm.Show();  
+                MdiParent = this                                
+            };            
+            tFrm.Show();
         }
     }
 }

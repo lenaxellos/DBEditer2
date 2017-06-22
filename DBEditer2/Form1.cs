@@ -43,10 +43,6 @@ namespace DBEditer2
             textBox1.Text = firstString + secondString + thirdString;
         }
 */
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
@@ -75,26 +71,26 @@ namespace DBEditer2
             //txtBox event
             txtSqlNote.PreviewKeyDown += new PreviewKeyDownEventHandler(TextBox_PreviewKeyDown);
             txtSqlNote.KeyDown += new KeyEventHandler(TextBox_KeyDown);
-            //txtSqlNote.KeyPress += new KeyPressEventHandler(TextBox_Press);
 
             //txtSqlNote Setting - style
             spl1.Controls[0].Controls.Add(txtSqlNote);
             txtSqlNote.Dock = DockStyle.Fill;
             txtSqlNote.Multiline = true;
             txtSqlNote.Name = "txtSql";
-            //txtSqlNote.BackColor = Color.DimGray;
-            //txtSqlNote.ForeColor = Color.Wheat;
-            txtSqlNote.BorderStyle = BorderStyle.Fixed3D;
-            spl1.Margin = new System.Windows.Forms.Padding(20, 20, 20, 20);
-                       
-            //txtSqlNote.Margin = new Padding(20,20,20,20);
-            //txtSqlNote.Location = new Point(200, 200);
-            //txtSqlNote.PreferredSize.Width = 500;
+            Font font1 = new Font("돋움", 11);
+            txtSqlNote.Font = font1;
 
-            //DataGridView Setting
+            //DataGridView event
+            dgv.CellDoubleClick += new DataGridViewCellEventHandler(DataGridView_CellClick);
+            //dgv.CellEndEdit += new DataGridViewCellEventHandler(DataGiedView_CellEndEdit);
+            //dgv.CellLeave += new DataGridViewCellEventHandler(DataGridView_CellLeave);
+            dgv.CellValueChanged += new DataGridViewCellEventHandler(DataGridView_CellValueChanged);            
+
+            //DataGridView Setting - style
             spl1.Controls[1].Controls.Add(dgv);
             dgv.Dock = DockStyle.Fill;
             dgv.Name = "dgv";
+            dgv.AllowUserToDeleteRows = true;           
 
             spl1.Orientation = Orientation.Horizontal;
             tp.Controls.Add(spl1);
@@ -111,7 +107,37 @@ namespace DBEditer2
             tabControl1.SelectedIndex = tabControl1.TabCount - 1;
         }
 
-        
+        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {                        
+            string firstString = "";
+            string secondString = "";
+            string thirdString = "";
+            TextBox txtCtl = new TextBox();
+            txtCtl = FindTextboxInTab(tabControl1.SelectedIndex);
+            int txt1Position = txtCtl.SelectionStart;
+            int txt1FullLength = txtCtl.TextLength;
+
+            firstString = txtCtl.Text.Substring(0, txt1Position);
+            secondString = ((DataGridView)sender)[e.ColumnIndex, e.RowIndex].Value.ToString();
+            if (txt1FullLength - txt1Position > 0)
+            {
+                thirdString = txtCtl.Text.Substring(txt1Position, txt1FullLength - txt1Position);
+            }
+            else
+            {
+                thirdString = "";
+            }
+
+            txtCtl.Text = firstString + secondString + thirdString.TrimEnd('\r').TrimEnd('\n').ToString();
+            //((DataGridView)sender)[e.ColumnIndex, e.RowIndex].Value.;                        
+            
+        }
+
+        private void DataTable_RowChanged(object sender, DataRowChangeEventArgs e)
+        {
+            e.Row.RowState.ToString();
+        }
+
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {      
             /*
@@ -126,13 +152,27 @@ namespace DBEditer2
                 }
             } 
              */            
-            if (e.Control && e.KeyCode == Keys.Enter)
+            //if (e.Control && e.KeyCode == Keys.Enter)
+            try
             {
-                e.Handled = true;
-                ShowData();                
+                if (e.Control && e.KeyCode == Keys.Enter)
+                {
+                    //ShowData();
+                    e.SuppressKeyPress = true;
+                    e.Handled = false;                
+                    ShowData();
+                    //System.Windows.Forms.MessageBox.Show("0000");
+                    
+                    //e.SuppressKeyPress = true;
+                }
+            }
+            catch
+            {
+                e.SuppressKeyPress = true;
             }
         }
           
+        //컨테이너에 포함된 Textbox에 단축기가 먹게 하기위해 추가
         private void TextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.A)
@@ -151,12 +191,12 @@ namespace DBEditer2
             {
                 ((TextBox)sender).Cut();
             }
-            //if (e.Control && e.KeyCode == Keys.Enter)
-            //{
-            //    ShowData();
-            //}
+            if (e.Control && e.KeyCode == Keys.Z)
+            {
+                ((TextBox)sender).Undo();
+            }
         }
-
+    
         private void DelTabPage()
         {
             if (tabControl1.TabPages.Count > 0)
@@ -215,21 +255,17 @@ namespace DBEditer2
             return sqlQuery[selectIndex];
         }
 
-        //데이터를 가져와서 그리드에 보여준다.        
+        //데이터를 가져와서 그리드에 보여준다.
         private void ShowData()
         {
             string query = "";
             TextBox txtCrtl = new TextBox();
             DataGridView dgv = new DataGridView();
-
+            
             txtCrtl = FindTextboxInTab(tabControl1.SelectedIndex);
-
+            
             dgv = FindDgvInTab(tabControl1.SelectedIndex);
-
-            con = new DBCon();
-
-            con.DBConnect();
-
+           
             if (txtCrtl.SelectedText.Trim() == "")
             {
                 query = FindSelectQuery(txtCrtl.Text, txtCrtl.SelectionStart);
@@ -238,9 +274,11 @@ namespace DBEditer2
             {
                 query = txtCrtl.SelectedText.Trim();
             }
-
-            con.DBDataSet(query);
+              
+            con = new DBCon(query);
             con.DBFillData(dgv);
+
+            //System.Windows.Forms.MessageBox.Show(con.pkCnt.ToString());           
         }
 
         private void rdoTable_Click(object sender, EventArgs e)
@@ -261,9 +299,7 @@ namespace DBEditer2
             string query = "SELECT TABLE_NAME FROM USER_TABLES WHERE UPPER(TABLE_NAME) LIKE UPPER('%@TABLENAME@%') ORDER BY TABLE_NAME";
             query = query.Replace("@TABLENAME@", txtFindTable.Text.Trim());
 
-            con = new DBCon();
-            con.DBConnect();
-            con.DBDataSet(query);
+            con = new DBCon(query);
             con.DBFillData(dataGridView2);
         }
 
@@ -272,7 +308,7 @@ namespace DBEditer2
             try
             {
                 dataGridView3.DataSource = null;
-                dataGridView3.Refresh();
+                dataGridView3.Refresh();                
             }
             catch(System.Exception e)
             {
@@ -282,9 +318,9 @@ namespace DBEditer2
             string query = "SELECT COLUMN_NAME, DATA_TYPE, DATA_LENGTH, NULLABLE FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = '@TABLENAME@'";
             query = query.Replace("@TABLENAME@", tableName.Trim());
 
-            con = new DBCon();
-            con.DBConnect();
-            con.DBDataSet(query);
+            con = new DBCon(query);
+            //con.DBConnect();
+            //con.DBDataSet(query);
             con.DBFillData(dataGridView3);
         }
 
@@ -294,8 +330,29 @@ namespace DBEditer2
         }
 
         private void toolStripButton8_Click(object sender, EventArgs e)
-        {
-            //textBox1.Text = textBox1.Text + Clipboard.GetText().ToString();
+        {            
+            TextBox txtCrtl = new TextBox();
+            DataGridView dgv = new DataGridView();
+            
+            txtCrtl = FindTextboxInTab(tabControl1.SelectedIndex);
+            dgv = FindDgvInTab(tabControl1.SelectedIndex);
+
+            if (dgv.ReadOnly)
+            {
+                dgv.ReadOnly = false;
+                dgv.AllowUserToAddRows = true;
+                dgv.GridColor = Color.Tomato;
+                dgv.BackgroundColor = Color.Tomato;
+                toolStripButton8.Text = "Editing...";
+            }
+            else
+            {
+                dgv.ReadOnly = true;
+                dgv.AllowUserToAddRows = false;
+                dgv.GridColor = Color.Wheat;
+                dgv.BackgroundColor = Color.Wheat;
+                toolStripButton8.Text = "Edit";
+            }
         }
 
         private void rdoTable_CheckedChanged(object sender, EventArgs e)
@@ -308,21 +365,111 @@ namespace DBEditer2
             DelTabPage();
         }
 
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        /*
+        private void DataGiedView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {        
+            if (con.dataTableProF.Rows[e.RowIndex][e.ColumnIndex].ToString() != ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())
+            {
+                ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.PaleGreen;
+            }
+            else
+            {
+                ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.White;
+            }
+        }
+         */
+
+        private void DataGridView_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {           
+            if (con.dataTableProF.Rows[e.RowIndex][e.ColumnIndex].ToString() != ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())
+            {
+                ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.PaleGreen;
+            }
+            else
+            {
+                ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.White;
+            }
+
+            foreach (DataRow R in con.dataTableProF.Rows)
+            {
+                switch (R.RowState)
+                {
+                    case DataRowState.Added:
+                        System.Windows.Forms.MessageBox.Show("Added");
+                        break;
+                    case DataRowState.Deleted:
+                        System.Windows.Forms.MessageBox.Show("Deleted");
+                        break;
+                    case DataRowState.Detached:
+                        System.Windows.Forms.MessageBox.Show("Detached");
+                        break;
+                    case DataRowState.Modified:
+                        System.Windows.Forms.MessageBox.Show("Modified");
+                        break;
+                    //case DataRowState.Unchanged:
+                    //    System.Windows.Forms.MessageBox.Show(con.pkCnt.ToString());
+                    //    break;
+                }
+            }
+
+        }
+
+        //CellValueChanged 수정한 값이 들어온다. 그런데 dataTable과 DataGridView컨트롤 모두 바뀐값으로 들어온다.
+        private void DataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (con.dataTableProF.Rows[e.RowIndex][e.ColumnIndex, DataRowVersion.Original].ToString() == ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())
+            {
+                ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.White;
+            }
+            else
+            {
+                ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.Violet;
+            }
+            /*
+            if (con.dataTableProF.Rows[e.RowIndex][e.ColumnIndex].ToString() != ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString())
+            {
+                ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.PaleGreen;
+            }
+            else
+            {
+                ((DataGridView)sender).Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.White;
+            }
+                 */                  
+            /*
+            foreach (DataRow R in con.dataTableProF.Rows)
+            {
+                switch (R.RowState)
+                {
+                    case DataRowState.Added:
+                        System.Windows.Forms.MessageBox.Show("Added");
+                        break;
+                    case DataRowState.Deleted:
+                        System.Windows.Forms.MessageBox.Show("Deleted");
+                        break;
+                    case DataRowState.Detached:
+                        System.Windows.Forms.MessageBox.Show("Detached");
+                        break;
+                    case DataRowState.Modified:
+                        System.Windows.Forms.MessageBox.Show("Modified");
+                        break;
+                    //case DataRowState.Unchanged:
+                    //    System.Windows.Forms.MessageBox.Show(con.pkCnt.ToString());
+                    //    break;
+                }
+            }
+             */
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                DbShowColumn((string)dataGridView2[e.ColumnIndex,e.RowIndex].Value);
+                DbShowColumn((string)dataGridView2[e.ColumnIndex, e.RowIndex].Value);
             }
-            catch(System.Exception ee)
+            catch (System.Exception ee)
             {
-                System.Windows.Forms.MessageBox.Show(ee.Message);                
+                System.Windows.Forms.MessageBox.Show(ee.Message);
             }
-        }
-
-        private void txtFindTable_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
+        }         
     }
 }
